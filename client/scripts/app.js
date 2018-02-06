@@ -3,7 +3,7 @@ var app = {
 
   //TODO: The current 'handleUsernameClick' function just toggles the class 'friend'
   //to all messages sent by the user
-  server: 'http://127.0.0.1:8080/classes/messages',
+  server: 'http://127.0.0.1:3000/classes/messages',
   username: 'anonymous',
   roomname: 'lobby',
   lastMessageId: 0,
@@ -64,7 +64,7 @@ var app = {
       contentType: 'application/json',
       success: function(data) {
         console.log('received data', data);
-
+        
         // Don't bother if we have nothing to work with
         if (!data.results || !data.results.length) { return; }
 
