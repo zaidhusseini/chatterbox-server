@@ -19,6 +19,8 @@ var defaultCorsHeaders = {
   'access-control-max-age': 10 // Seconds.
 };
 
+var returnValue = {results: []}; // Return JSON Object
+
 var requestHandler = function(request, response) {
   // Request and Response come from node's http module.
   //
@@ -34,6 +36,7 @@ var requestHandler = function(request, response) {
   // Adding more logging to your server can be an easy way to get passive
   // debugging help, but you should always be careful about leaving stray
   // console.logs in your code.
+
   console.log('Serving request type ' + request.method + ' for url ' + request.url);
 
   // The outgoing status.
@@ -58,7 +61,14 @@ var requestHandler = function(request, response) {
   //
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
-  var returnValue = {results: []};
+ 
+
+  if (request.method === 'POST') {
+    request.on('data', function(chunk) {
+      returnValue.results.push(JSON.parse(chunk));
+    });
+  }
+
   response.end(JSON.stringify(returnValue));
 };
 
