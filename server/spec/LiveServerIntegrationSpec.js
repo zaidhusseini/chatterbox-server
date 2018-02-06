@@ -73,6 +73,7 @@ describe('server', function() {
     });
   });
 
+  // We added this test
   it('should add createdAt to response data', function(done) {
     var requestParams = {method: 'POST',
       uri: 'http://127.0.0.1:3000/classes/messages',
@@ -91,5 +92,42 @@ describe('server', function() {
     });
   });
 
+  // We added this test
+  it('should add updatedAt to response data', function(done) {
+    var requestParams = {method: 'POST',
+      uri: 'http://127.0.0.1:3000/classes/messages',
+      json: {
+        username: 'Jono',
+        message: 'Do my bidding!'}
+    };
+
+    request(requestParams, function(error, response, body) {
+      // Now if we request the log, that message we posted should be there:
+      request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
+        var messages = JSON.parse(body).results;
+        expect(messages[1]).to.have.property('updatedAt');
+        done();
+      });
+    });
+  });
+
+  // We added this test
+  it('should add objectId to response data', function(done) {
+    var requestParams = {method: 'POST',
+      uri: 'http://127.0.0.1:3000/classes/messages',
+      json: {
+        username: 'Jono',
+        message: 'Do my bidding!'}
+    };
+
+    request(requestParams, function(error, response, body) {
+      // Now if we request the log, that message we posted should be there:
+      request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
+        var messages = JSON.parse(body).results;
+        expect(messages[1]).to.have.property('objectId');
+        done();
+      });
+    });
+  });
 
 });

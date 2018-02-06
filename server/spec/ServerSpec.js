@@ -115,7 +115,7 @@ describe('Node Server Request Listener Function', function() {
         expect(res._responseCode).to.equal(404);
       });
   });
-
+  // We added this test
   it('Should add a createdAt to each response', function() {
     var stubMsg = {
       username: 'Jono',
