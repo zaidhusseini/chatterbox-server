@@ -19,7 +19,7 @@ var defaultCorsHeaders = {
   'access-control-max-age': 10 // Seconds.
 };
 
-var returnValue = {results: [{username:'Eva', roomname: 'lobby', text: 'try this again!'}]}; // Return JSON Object
+var returnValue = {results: [{username: 'Zaid&Erin', text: 'yooo', roomname: 'lobby' }]}; // Return JSON Object
 var counter = 0;
 
 
@@ -69,9 +69,12 @@ var requestHandler = function(request, response) {
     request.on('data', function(chunk) {
       var newMessage = JSON.parse(chunk);
       newMessage.roomname = (newMessage.roomname === undefined) ? 'lobby' : newMessage.roomname;
+      counter++;
       newMessage.objectId = counter + 1;
+      newMessage.createdAt = new Date();
+      newMessage.updatedAt = newMessage.createdAt;
       returnValue.results.push(newMessage);
-      console.log("post", newMessage);
+      console.log('post', newMessage);
     });
   } 
 

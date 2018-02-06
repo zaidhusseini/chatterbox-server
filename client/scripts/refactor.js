@@ -22,7 +22,7 @@
 
 app = {
 
-  server: 'http://parse.CAMPUS.hackreactor.com/chatterbox/classes/messages',
+  server: 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages',
 
   init: function() {
     // Get username
@@ -80,6 +80,7 @@ app = {
       contentType: 'application/json',
       success: function(json) {
         app.displayMessages(json.results);
+        console.log(json.results);
       },
       complete: function() {
         app.stopSpinner();
