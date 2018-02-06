@@ -19,7 +19,9 @@ var defaultCorsHeaders = {
   'access-control-max-age': 10 // Seconds.
 };
 
-var returnValue = {results: []}; // Return JSON Object
+var returnValue = {results: [{username:'Eva', roomname: 'lobby', text: 'try this again!'}]}; // Return JSON Object
+var counter = 0;
+
 
 var requestHandler = function(request, response) {
   // Request and Response come from node's http module.
@@ -40,8 +42,8 @@ var requestHandler = function(request, response) {
   console.log('Serving request type ' + request.method + ' for url ' + request.url);
 
   // The outgoing status.
-  var statusCode = (request.method === 'GET') ? 200 : 201;
-  statusCode = (request.url !== '/classes/messages') ? 404 : statusCode;
+  var statusCode = (request.method === 'GET' || 'OPTIONS') ? 200 : 201;
+  statusCode = (request.url.includes('/classes/messages')) ? statusCode : 404;
   // See the note below about CORS headers.
   var headers = defaultCorsHeaders;
 
@@ -65,9 +67,13 @@ var requestHandler = function(request, response) {
 
   if (request.method === 'POST') {
     request.on('data', function(chunk) {
-      returnValue.results.push(JSON.parse(chunk));
+      var newMessage = JSON.parse(chunk);
+      newMessage.roomname = (newMessage.roomname === undefined) ? 'lobby' : newMessage.roomname;
+      newMessage.objectId = counter + 1;
+      returnValue.results.push(newMessage);
+      console.log("post", newMessage);
     });
-  }
+  } 
 
   response.end(JSON.stringify(returnValue));
 };

@@ -3,7 +3,7 @@ var app = {
 
   //TODO: The current 'handleUsernameClick' function just toggles the class 'friend'
   //to all messages sent by the user
-  server: 'http://parse.sfm8.hackreactor.com/chatterbox/classes/messages',
+  server: 'http://127.0.0.1:8080/classes/messages',
   username: 'anonymous',
   roomname: 'lobby',
   lastMessageId: 0,
@@ -60,10 +60,11 @@ var app = {
     $.ajax({
       url: app.server,
       type: 'GET',
-      data: { order: '-createdAt' },
+      data: {},
       contentType: 'application/json',
       success: function(data) {
         console.log('received data', data);
+
         // Don't bother if we have nothing to work with
         if (!data.results || !data.results.length) { return; }
 
@@ -219,7 +220,7 @@ var app = {
       roomname: app.roomname || 'lobby'
     };
 
-    app.send(message);
+    app.send(JSON.stringify(message));
 
     // Stop the form from submitting
     event.preventDefault();
