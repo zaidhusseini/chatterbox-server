@@ -42,7 +42,7 @@ var requestHandler = function(request, response) {
   console.log('Serving request type ' + request.method + ' for url ' + request.url);
 
   // The outgoing status.
-  var statusCode = (request.method === 'GET') ? 200 : 201;
+  var statusCode = ((request.method === 'GET') || (request.method === 'OPTIONS') ) ? 200 : 201;
   statusCode = (request.url.includes('/classes/messages')) ? statusCode : 404;
   // See the note below about CORS headers.
   var headers = defaultCorsHeaders;
