@@ -2,6 +2,16 @@
 var http = require('http');
 var handleRequest = require('./request-handler.js');
 
+const fs = require('fs');
+
+fs.readFile('../client/index.html', 'utf8');
+
+
+// , 'utf8', (err, fd) => {
+//   if (err) throw err;
+//   console.log(fd);
+// });
+
 // Every server needs to listen on a port with a unique number. The
 // standard port for HTTP servers is port 80, but that port is
 // normally already claimed by another server and/or not accessible
